@@ -28,7 +28,7 @@ public class ViewTopicMessagesHandlerTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new ViewTopicMessagesHandler(topicMessageDao);
+        handler = new ViewTopicMessagesHandler(topicMessageDao, state);
         state = new DiscussionCliState();
     }
 
@@ -41,7 +41,7 @@ public class ViewTopicMessagesHandlerTest {
         when(topicMessageDao.getMessagesForTopicName(topicName)).thenReturn(messages);
 
         // WHEN
-        handler.handleRequest(state);
+        handler.handleRequest();
 
         // THEN
         assertEquals(DiscussionCliOperation.VIEW_TOPICS, state.getNextOperation());
@@ -58,7 +58,7 @@ public class ViewTopicMessagesHandlerTest {
         when(topicMessageDao.getMessagesForTopicName(topic.getName())).thenReturn(messages);
 
         // WHEN
-        handler.handleRequest(state);
+        handler.handleRequest();
 
         // THEN
         assertNull(state.getNextOperation());

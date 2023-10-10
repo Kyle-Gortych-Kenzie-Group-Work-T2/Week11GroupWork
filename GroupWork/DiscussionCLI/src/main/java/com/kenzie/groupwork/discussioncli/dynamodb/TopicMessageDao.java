@@ -20,6 +20,7 @@ public class TopicMessageDao {
      * Constructs a TopicMessageDao with the provided DynamoDBMapper.
      * @param mapper the DynamoDBMapper
      */
+    @Inject
     public TopicMessageDao(DynamoDBMapper mapper) {
         this.mapper = mapper;
     }
@@ -40,4 +41,11 @@ public class TopicMessageDao {
     }
 
     // PARTICIPANTS: A method does not yet exist to save a TopicMessage to our Messages table
+
+    public TopicMessage saveTopicMessage(TopicMessage topicName){
+        // Save the TopicMessage using the DynamoDBMapper
+        mapper.save(topicName);
+
+        return topicName;
+    }
 }

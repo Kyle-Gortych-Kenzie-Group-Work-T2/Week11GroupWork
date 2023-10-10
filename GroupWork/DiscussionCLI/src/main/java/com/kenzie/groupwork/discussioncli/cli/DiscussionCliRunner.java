@@ -1,5 +1,6 @@
 package com.kenzie.groupwork.discussioncli.cli;
 
+import com.amazonaws.services.s3.internal.S3AccessPointBuilder;
 import com.kenzie.groupwork.discussioncli.dynamodb.DynamoDbClientProvider;
 import com.kenzie.groupwork.discussioncli.dynamodb.MemberDao;
 import com.kenzie.groupwork.discussioncli.dynamodb.TopicDao;
@@ -24,13 +25,24 @@ import dagger.*;
 public class DiscussionCliRunner {
     private static DynamoDBMapper mapper;
     private static ATAUserInput userHandler;
+
+    private DiscussionCliState state;
     /**
      * Starts the CLI application.
      * @param args no args expected
      */
     public static void main(String[] args) {
-        DiscussionCli cli = new DiscussionCli(
-                getATAUserInput(),
+
+    // Create an instance of your Dagger component
+        DiscussionCliComponent dagger = DaggerDiscussionCliComponent.create();
+
+    // Obtain a DiscussionCli instance from the component
+        DiscussionCli discussionCli = dagger.provideDiscussionCli();
+
+    // Now we can use 'discussionCli' to interact with the CLI application
+        discussionCli.handleRequests();
+
+             /*   getATAUserInput(),
                 getLoginHandler(),
                 getViewTopicsHandler(),
                 getCreateTopicHandler(),
@@ -41,7 +53,7 @@ public class DiscussionCliRunner {
                 new DiscussionCliState()
         );
 
-        cli.handleRequests();
+        cli.handleRequests(); */
     }
 
     /**
@@ -60,7 +72,12 @@ public class DiscussionCliRunner {
      * @return a new ChangeTopicHandler
      */
     private static ChangeTopicHandler getChangeTopicHandler() {
-        return new ChangeTopicHandler(getATAUserInput());
+        return new ChangeTopicHandler(getATAUserInput(), getDiscussionCliState());
+    }
+
+    private static DiscussionCliState getDiscussionCliState() {
+
+        return new DiscussionCliState();
     }
 
     /**
@@ -68,7 +85,7 @@ public class DiscussionCliRunner {
      * @return a new CreateTopicMessageHandler
      */
     private static CreateTopicMessageHandler getCreateTopicMessageHandler() {
-        return new CreateTopicMessageHandler(getATAUserInput());
+        return new CreateTopicMessageHandler(getATAUserInput(), getDiscussionCliState());
     }
 
     /**
@@ -76,7 +93,7 @@ public class DiscussionCliRunner {
      * @return a new LoginHandler
      */
     private static LoginHandler getLoginHandler() {
-        return new LoginHandler(getMemberDao(), getATAUserInput());
+        return new LoginHandler(getMemberDao(), getATAUserInput(),getDiscussionCliState());
     }
 
     /**
@@ -84,7 +101,7 @@ public class DiscussionCliRunner {
      * @return a new ViewTopicsHandler
      */
     private static ViewTopicsHandler getViewTopicsHandler() {
-        return new ViewTopicsHandler(getTopicDao(), getATAUserInput());
+        return new ViewTopicsHandler(getTopicDao(), getATAUserInput(), getDiscussionCliState());
     }
 
     /**
@@ -92,7 +109,7 @@ public class DiscussionCliRunner {
      * @return a new CreateTopicHandler
      */
     private static CreateTopicHandler getCreateTopicHandler() {
-        return new CreateTopicHandler(getTopicDao(), getATAUserInput());
+        return new CreateTopicHandler(getTopicDao(), getATAUserInput(),getDiscussionCliState());
     }
 
     /**
@@ -100,7 +117,7 @@ public class DiscussionCliRunner {
      * @return a new ViewTopicMessagesHandler
      */
     private static ViewTopicMessagesHandler getViewTopicMessagesHandler() {
-        return new ViewTopicMessagesHandler(getTopicMessageDao());
+        return new ViewTopicMessagesHandler(getTopicMessageDao(), getDiscussionCliState());
     }
 
     /**
@@ -108,7 +125,7 @@ public class DiscussionCliRunner {
      * @return a new ExitHandler
      */
     private static ExitHandler getExitHandler() {
-        return new ExitHandler();
+        return new ExitHandler(getDiscussionCliState());
     }
 
     /**
@@ -139,6 +156,7 @@ public class DiscussionCliRunner {
      * Uses the default DynamoDB client provider for default region to return a (shared) DynamoDBMapper instance.
      * @return DynamoDBMapper, ready to use!
      */
+
     private static DynamoDBMapper getDynamoDBMapper() {
         if (null == mapper) {
             mapper = new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient());

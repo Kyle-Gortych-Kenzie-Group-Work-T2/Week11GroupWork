@@ -3,6 +3,7 @@ package com.kenzie.groupwork.discussioncli.dynamodb;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,6 +11,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class TopicDaoTest {
+    @InjectMocks
     private TopicDao topicDao;
 
     @Mock
@@ -18,7 +20,7 @@ public class TopicDaoTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        topicDao = new TopicDao(mapper);
+        //topicDao = new TopicDao(mapper);
     }
 
     @Test

@@ -11,18 +11,21 @@ import javax.inject.Inject;
  */
 public class CreateTopicMessageHandler implements DiscussionCliOperationHandler {
     private ATAUserInput userHandler;
+    private DiscussionCliState state;
 
     /**
      * Constructs handler with its dependencies.
      * @param userHandler the ATAUserInput, for user input
      */
     @Inject
-    public CreateTopicMessageHandler(ATAUserInput userHandler) {
+    public CreateTopicMessageHandler(ATAUserInput userHandler,DiscussionCliState state) {
         this.userHandler = userHandler;
+        this.state=state;
     }
 
     @Override
-    public String handleRequest(DiscussionCliState state) {
+    public String handleRequest() {
+
         if (null == state.getCurrentMember()) {
             throw new IllegalStateException(
                 "Encountered request to create topic message but there is no current member. Exiting"

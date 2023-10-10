@@ -1,5 +1,7 @@
 package com.kenzie.groupwork.discussioncli.cli;
 
+import javax.inject.Inject;
+
 /**
  * All operations supported by the ATA Discussion CLI.
  */
@@ -13,6 +15,7 @@ public enum DiscussionCliOperation {
     EXIT("Exit");
 
     private final String userVisibleRepresentation;
+
 
     DiscussionCliOperation(final String userVisibleRepresentation) {
         this.userVisibleRepresentation = userVisibleRepresentation;

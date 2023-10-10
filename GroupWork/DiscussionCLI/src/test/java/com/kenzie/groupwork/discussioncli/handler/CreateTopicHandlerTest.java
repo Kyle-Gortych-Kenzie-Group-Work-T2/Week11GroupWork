@@ -28,7 +28,7 @@ public class CreateTopicHandlerTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new CreateTopicHandler(topicDao, userHandler);
+        handler = new CreateTopicHandler(topicDao, userHandler, state);
         state = getState();
     }
 
@@ -47,7 +47,7 @@ public class CreateTopicHandlerTest {
         when(topicDao.createTopic(any(Topic.class))).thenReturn(newTopic);
 
         // WHEN
-        String result = handler.handleRequest(state);
+        String result = handler.handleRequest();
 
         // THEN
         // DAO allows creating topic

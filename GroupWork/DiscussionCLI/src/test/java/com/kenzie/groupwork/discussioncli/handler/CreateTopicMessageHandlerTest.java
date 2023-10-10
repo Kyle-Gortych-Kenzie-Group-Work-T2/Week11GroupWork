@@ -29,7 +29,7 @@ public class CreateTopicMessageHandlerTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new CreateTopicMessageHandler(userHandler);
+        handler = new CreateTopicMessageHandler(userHandler, state);
         state = getState();
     }
 
@@ -48,7 +48,7 @@ public class CreateTopicMessageHandlerTest {
         state.setCurrentMember(new Member("amember"));
 
         // WHEN
-        handler.handleRequest(state);
+        handler.handleRequest();
 
         // THEN
         assertEquals(DiscussionCliOperation.VIEW_TOPICS, state.getNextOperation());
@@ -68,7 +68,7 @@ public class CreateTopicMessageHandlerTest {
         state.setCurrentMember(currentMember);
 
         // WHEN
-        handler.handleRequest(state);
+        handler.handleRequest();
 
         // THEN
         assertEquals(DiscussionCliOperation.VIEW_TOPIC_MESSAGES, state.getNextOperation());
@@ -78,12 +78,12 @@ public class CreateTopicMessageHandlerTest {
     void handleRequest_withNullCurrentMemberInState_throwsException() {
         // GIVEN
         // state does not have member but has current topic
-        state.setCurrentMember(null);
+        //state.setCurrentMember(null);
         Topic currentTopic = new Topic("a lonely lonely topic", "with description");
-        state.setCurrentTopic(currentTopic);
+        //state.setCurrentTopic(currentTopic);
 
         // WHEN + THEN - exception fires
-        assertThrows(IllegalStateException.class, () -> handler.handleRequest(state));
+        assertThrows(IllegalStateException.class, () -> handler.handleRequest());
     }
 
     private DiscussionCliState getState() {

@@ -12,5 +12,5 @@ public interface DiscussionCliOperationHandler {
      * @param state The current CLI app state
      * @return String of content to be rendered to user, if any
      */
-    String handleRequest(DiscussionCliState state);
+    String handleRequest();
 }

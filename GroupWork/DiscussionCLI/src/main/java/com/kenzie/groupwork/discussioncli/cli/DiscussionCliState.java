@@ -4,6 +4,7 @@ import com.kenzie.groupwork.discussioncli.dynamodb.Member;
 import com.kenzie.groupwork.discussioncli.dynamodb.Topic;
 import com.kenzie.groupwork.discussioncli.dynamodb.TopicMessage;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -11,11 +12,14 @@ import java.util.List;
  * next operation, for an instance of DiscussionCli.
  */
 public class DiscussionCliState {
+
     private Member currentMember;
     private Topic currentTopic;
     private List<Topic> listedTopics;
     private List<TopicMessage> listedTopicMessages;
+
     private DiscussionCliOperation nextOperation;
+
 
     public Member getCurrentMember() {
         return currentMember;

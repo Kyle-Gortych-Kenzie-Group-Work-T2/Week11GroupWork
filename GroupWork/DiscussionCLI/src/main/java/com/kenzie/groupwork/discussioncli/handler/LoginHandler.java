@@ -14,6 +14,7 @@ import javax.inject.Inject;
 public class LoginHandler implements DiscussionCliOperationHandler {
     private MemberDao memberDao;
     private ATAUserInput userHandler;
+    private DiscussionCliState state;
 
     /**
      * Constructs a new LoginHandler with provided DAO.
@@ -21,18 +22,19 @@ public class LoginHandler implements DiscussionCliOperationHandler {
      * @param userHandler Handler to manage user interactions
      */
     @Inject
-    public LoginHandler(MemberDao memberDao, ATAUserInput userHandler) {
+    public LoginHandler(MemberDao memberDao, ATAUserInput userHandler, DiscussionCliState state) {
         this.memberDao = memberDao;
         this.userHandler = userHandler;
+        this.state=state;
     }
 
     @Override
-    public String handleRequest(DiscussionCliState state) {
+    public String handleRequest() {
         String username = requestUsername();
         Member member = findOrCreateMember(username);
 
-        state.setCurrentMember(member);
-        state.setNextOperation(DiscussionCliOperation.VIEW_TOPICS);
+       // state.setCurrentMember(member);
+       // state.setNextOperation(DiscussionCliOperation.VIEW_TOPICS);
 
         return renderResponse(member);
     }

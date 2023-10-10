@@ -1,11 +1,16 @@
 package com.kenzie.groupwork.discussioncli.dynamodb;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+
 import java.util.Objects;
 
 /**
  * A topic in the Discussion app, which may have many TopicMessages associated
  * with it.
  */
+@DynamoDBTable(tableName = "DependencyInjection-Topics")
 public class Topic {
     private static final int MAX_NAME_LENGTH = 50;
 
@@ -30,7 +35,7 @@ public class Topic {
         setDescription(description);
         setArchived(false);
     }
-
+    @DynamoDBHashKey(attributeName = "name")
     public String getName() {
         return name;
     }
@@ -47,7 +52,7 @@ public class Topic {
         }
         this.name = name;
     }
-
+    @DynamoDBRangeKey(attributeName = "description")
     public String getDescription() {
         return description;
     }
@@ -55,7 +60,7 @@ public class Topic {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    @DynamoDBRangeKey(attributeName = "isArchived")
     public Boolean isArchived() {
         return isArchived;
     }

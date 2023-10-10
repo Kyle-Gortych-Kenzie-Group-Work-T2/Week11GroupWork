@@ -16,18 +16,21 @@ import java.util.List;
  */
 public class ViewTopicMessagesHandler implements DiscussionCliOperationHandler {
     private TopicMessageDao topicMessageDao;
+    private DiscussionCliState state;
 
     /**
      * Constructs handler with its dependencies.
      * @param topicMessageDao TopicMessageDao
      */
     @Inject
-    public ViewTopicMessagesHandler(TopicMessageDao topicMessageDao) {
+    public ViewTopicMessagesHandler(TopicMessageDao topicMessageDao, DiscussionCliState state) {
+
         this.topicMessageDao = topicMessageDao;
+        this.state=state;
     }
 
     @Override
-    public String handleRequest(DiscussionCliState state) {
+    public String handleRequest() {
         if (null == state.getCurrentTopic()) {
             state.setNextOperation(DiscussionCliOperation.VIEW_TOPICS);
             return "Sorry, you must select a topic first.";

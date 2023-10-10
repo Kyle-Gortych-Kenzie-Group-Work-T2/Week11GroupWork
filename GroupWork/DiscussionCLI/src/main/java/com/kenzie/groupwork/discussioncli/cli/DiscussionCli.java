@@ -1,5 +1,6 @@
 package com.kenzie.groupwork.discussioncli.cli;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.kenzie.groupwork.discussioncli.handler.ChangeTopicHandler;
 import com.kenzie.groupwork.discussioncli.handler.CreateTopicHandler;
 import com.kenzie.groupwork.discussioncli.handler.CreateTopicMessageHandler;
@@ -10,6 +11,7 @@ import com.kenzie.groupwork.discussioncli.handler.ViewTopicMessagesHandler;
 import com.kenzie.groupwork.discussioncli.handler.ViewTopicsHandler;
 import com.kenzie.groupwork.discussioncli.cli.input.ATAUserInput;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,6 +36,7 @@ public class DiscussionCli {
     private final ExitHandler exitHandler;
     private final DiscussionCliState state;
 
+
     /**
      * Creates a new DiscussionCli to interact with user.
      * @param userHandler Handler for user interactions
@@ -45,7 +48,9 @@ public class DiscussionCli {
      * @param createTopicMessageHandler Handler to create a new discussion message
      * @param exitHandler Handler to exit the CLI
      * @param state Tracks the internal state of the Discussion CLI
+     *
      */
+    @Inject
     public DiscussionCli(final ATAUserInput userHandler,
                          final LoginHandler loginHandler,
                          final ViewTopicsHandler viewTopicsHandler,
@@ -54,7 +59,8 @@ public class DiscussionCli {
                          final ChangeTopicHandler changeTopicHandler,
                          final CreateTopicMessageHandler createTopicMessageHandler,
                          final ExitHandler exitHandler,
-                         final DiscussionCliState state) {
+                         final DiscussionCliState state)
+    {
         this.userHandler = userHandler;
         this.loginHandler = loginHandler;
         this.viewTopicsHandler = viewTopicsHandler;
@@ -64,6 +70,7 @@ public class DiscussionCli {
         this.createTopicMessageHandler = createTopicMessageHandler;
         this.exitHandler = exitHandler;
         this.state = state;
+
 
         registerHandlers();
     }
@@ -80,7 +87,8 @@ public class DiscussionCli {
         do {
             nextOperation = getNextRequestedCliOperation();
             if (operationHandlers.containsKey(nextOperation)) {
-                System.out.println(operationHandlers.get(nextOperation).handleRequest(state));
+
+                System.out.println(operationHandlers.get(nextOperation).handleRequest());
             } else {
                 System.out.println("Hm, got a valid DiscussionCliOperation that the DiscussionCli doesn't " +
                                    "know how to handle, please fix this!: " + nextOperation + ". Exiting");

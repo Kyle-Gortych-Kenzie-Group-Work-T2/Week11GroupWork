@@ -17,6 +17,7 @@ public class TopicDao {
      * Constructs a TopicDao with the given DynamoDBMapper.
      * @param mapper the DynamoDBMapper
      */
+    @Inject
     public TopicDao(DynamoDBMapper mapper) {
         this.mapper = mapper;
     }
@@ -27,9 +28,8 @@ public class TopicDao {
      * @return The topic that was created
      */
     public Topic createTopic(Topic topic) {
-
-        return null;
-
+        mapper.save(topic);
+        return topic;
     }
 
     /**
@@ -40,6 +40,7 @@ public class TopicDao {
      * @return The Topics
      */
     public List<Topic> getTopics(int numTopics) {
+
         List<Topic> topics = mapper.scan(Topic.class, new DynamoDBScanExpression());
         int endIndex = Integer.min(numTopics, topics.size());
         return new ArrayList<>(topics.subList(0, endIndex));

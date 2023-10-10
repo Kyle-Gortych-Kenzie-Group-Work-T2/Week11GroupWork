@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class ViewTopicsHandler implements DiscussionCliOperationHandler {
     private static final int MAX_NUM_TOPICS_TO_VIEW = 100;
+    private DiscussionCliState state;
 
     private final TopicDao topicDao;
     private final ATAUserInput userHandler;
@@ -25,13 +26,16 @@ public class ViewTopicsHandler implements DiscussionCliOperationHandler {
      * @param topicDao The TopicDao
      * @param userHandler the ATAUserInput, for user input
      */
-    public ViewTopicsHandler(TopicDao topicDao, ATAUserInput userHandler) {
+
+   @Inject
+    public ViewTopicsHandler(TopicDao topicDao, ATAUserInput userHandler,DiscussionCliState state) {
         this.topicDao = topicDao;
         this.userHandler = userHandler;
+        this.state=state;
     }
 
     @Override
-    public String handleRequest(DiscussionCliState state) {
+    public String handleRequest() {
         int numTopics = userHandler.getInteger(
             1,
             MAX_NUM_TOPICS_TO_VIEW,

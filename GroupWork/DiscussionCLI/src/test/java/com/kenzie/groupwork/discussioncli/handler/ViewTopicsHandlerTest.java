@@ -30,7 +30,7 @@ public class ViewTopicsHandlerTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new ViewTopicsHandler(topicDao, userHandler);
+        handler = new ViewTopicsHandler(topicDao, userHandler, state);
         state = getCliState();
     }
 
@@ -44,7 +44,7 @@ public class ViewTopicsHandlerTest {
         when(topicDao.getTopics(numTopics)).thenReturn(Collections.emptyList());
 
         // WHEN
-        String result = handler.handleRequest(state);
+        String result = handler.handleRequest();
 
         // THEN
         assertTrue(result.contains("Topic name"));
@@ -62,7 +62,7 @@ public class ViewTopicsHandlerTest {
         when(topicDao.getTopics(numTopics)).thenReturn(Collections.singletonList(existingTopic));
 
         // WHEN
-        String result = handler.handleRequest(state);
+        String result = handler.handleRequest();
 
         // THEN
         assertTrue(result.contains(existingTopic.getName()));
@@ -80,7 +80,7 @@ public class ViewTopicsHandlerTest {
         when(topicDao.getTopics(numTopics)).thenReturn(Collections.singletonList(existingTopic));
 
         // WHEN
-        handler.handleRequest(state);
+        handler.handleRequest();
 
         // THEN
         assertNull(state.getNextOperation());

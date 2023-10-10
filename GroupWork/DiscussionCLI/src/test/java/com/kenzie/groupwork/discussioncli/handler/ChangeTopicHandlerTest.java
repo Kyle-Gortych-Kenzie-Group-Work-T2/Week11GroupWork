@@ -22,6 +22,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ChangeTopicHandlerTest {
     private ChangeTopicHandler handler;
+
     private DiscussionCliState state;
 
     @Mock
@@ -30,8 +31,9 @@ public class ChangeTopicHandlerTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new ChangeTopicHandler(userHandler);
         state = getState();
+        handler = new ChangeTopicHandler(userHandler, state);
+
     }
 
     @Test
@@ -49,7 +51,7 @@ public class ChangeTopicHandlerTest {
         Topic selectedTopic = listedTopics.get(1);
 
         // WHEN
-        String result = handler.handleRequest(state);
+        String result = handler.handleRequest();
 
         // THEN
         assertTrue(
@@ -74,7 +76,7 @@ public class ChangeTopicHandlerTest {
         when(userHandler.getInteger(any())).thenReturn(0);
 
         // WHEN
-        handler.handleRequest(state);
+        handler.handleRequest();
 
         // THEN
         assertEquals(listedTopics.get(0), state.getCurrentTopic());

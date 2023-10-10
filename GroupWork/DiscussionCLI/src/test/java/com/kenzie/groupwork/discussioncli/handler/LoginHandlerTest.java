@@ -31,7 +31,7 @@ public class LoginHandlerTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new LoginHandler(memberDao, userHandler);
+        handler = new LoginHandler(memberDao, userHandler, state);
         state = getCliState();
     }
 
@@ -48,7 +48,7 @@ public class LoginHandlerTest {
         when(memberDao.getMember(newUsername)).thenReturn(null);
 
         // WHEN
-        String result = handler.handleRequest(state);
+        String result = handler.handleRequest();
 
         // THEN
         // member is created
@@ -70,7 +70,7 @@ public class LoginHandlerTest {
         when(memberDao.getMember(existingName)).thenReturn(existingMember);
 
         // WHEN
-        String result = handler.handleRequest(state);
+        String result = handler.handleRequest();
 
         // THEN
         verify(memberDao, times(0)).createMember(any());
@@ -87,7 +87,7 @@ public class LoginHandlerTest {
         when(memberDao.createMember(any())).thenReturn(new Member());
 
         // WHEN
-        handler.handleRequest(state);
+        handler.handleRequest();
 
         // THEN
         // state says next operation is view topics
@@ -103,7 +103,7 @@ public class LoginHandlerTest {
         when(memberDao.getMember(anyString())).thenReturn(new Member());
 
         // WHEN
-        handler.handleRequest(state);
+        handler.handleRequest();
 
         // THEN
         // state says next operation is view topics

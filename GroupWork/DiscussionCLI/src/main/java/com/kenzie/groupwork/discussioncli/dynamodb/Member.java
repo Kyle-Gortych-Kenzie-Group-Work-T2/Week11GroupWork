@@ -9,7 +9,8 @@ import java.util.Objects;
 /**
  * A Discussion app member.
  */
-@DynamoDBTable(tableName = "DynamoDbAnnotationsLoadSave-Members")
+@DynamoDBTable(tableName = "DependencyInjection-Members")
+//@DynamoDBTable(tableName = "DynamoDbAnnotationsLoadSave-Members")
 public class Member {
     private static final Integer STARTING_KARMA_POINTS = 1000;
 
