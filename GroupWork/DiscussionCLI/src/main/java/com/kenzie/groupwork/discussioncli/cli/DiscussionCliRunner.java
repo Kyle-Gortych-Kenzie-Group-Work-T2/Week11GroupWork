@@ -1,6 +1,5 @@
 package com.kenzie.groupwork.discussioncli.cli;
 
-import com.amazonaws.services.s3.internal.S3AccessPointBuilder;
 import com.kenzie.groupwork.discussioncli.dynamodb.DynamoDbClientProvider;
 import com.kenzie.groupwork.discussioncli.dynamodb.MemberDao;
 import com.kenzie.groupwork.discussioncli.dynamodb.TopicDao;
@@ -13,10 +12,7 @@ import com.kenzie.groupwork.discussioncli.handler.LoginHandler;
 import com.kenzie.groupwork.discussioncli.handler.ViewTopicMessagesHandler;
 import com.kenzie.groupwork.discussioncli.handler.ViewTopicsHandler;
 import com.kenzie.groupwork.discussioncli.cli.input.ATAUserInput;
-import com.kenzie.groupwork.discussioncli.cli.DiscussionCliComponent;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-
-import dagger.*;
 
 /**
  * Provides a main method to instantiate and run the DiscussionCli we will be
@@ -85,7 +81,7 @@ public class DiscussionCliRunner {
      * @return a new CreateTopicMessageHandler
      */
     private static CreateTopicMessageHandler getCreateTopicMessageHandler() {
-        return new CreateTopicMessageHandler(getATAUserInput(), getDiscussionCliState());
+        return new CreateTopicMessageHandler(getATAUserInput(),getDiscussionCliState());
     }
 
     /**

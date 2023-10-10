@@ -24,6 +24,7 @@ public class LoginHandler implements DiscussionCliOperationHandler {
     @Inject
     public LoginHandler(MemberDao memberDao, ATAUserInput userHandler, DiscussionCliState state) {
         this.memberDao = memberDao;
+
         this.userHandler = userHandler;
         this.state=state;
     }
@@ -33,8 +34,8 @@ public class LoginHandler implements DiscussionCliOperationHandler {
         String username = requestUsername();
         Member member = findOrCreateMember(username);
 
-       // state.setCurrentMember(member);
-       // state.setNextOperation(DiscussionCliOperation.VIEW_TOPICS);
+        state.setCurrentMember(member);
+        state.setNextOperation(DiscussionCliOperation.VIEW_TOPICS);
 
         return renderResponse(member);
     }

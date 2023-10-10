@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ViewTopicMessagesHandlerTest {
+
     private ViewTopicMessagesHandler handler;
+
     private DiscussionCliState state;
 
     @Mock
@@ -28,8 +31,8 @@ public class ViewTopicMessagesHandlerTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new ViewTopicMessagesHandler(topicMessageDao, state);
         state = new DiscussionCliState();
+        handler = new ViewTopicMessagesHandler(topicMessageDao, state);
     }
 
     @Test

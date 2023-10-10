@@ -20,6 +20,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ViewTopicsHandlerTest {
     private ViewTopicsHandler handler;
+    @Mock
     private DiscussionCliState state;
 
     @Mock

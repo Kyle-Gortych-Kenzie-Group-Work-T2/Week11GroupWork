@@ -3,6 +3,7 @@ package com.kenzie.groupwork.discussioncli.handler;
 import com.kenzie.groupwork.discussioncli.cli.DiscussionCliOperation;
 import com.kenzie.groupwork.discussioncli.cli.DiscussionCliState;
 import com.kenzie.groupwork.discussioncli.cli.input.ATAUserInput;
+import com.kenzie.groupwork.discussioncli.dynamodb.TopicMessageDao;
 
 import javax.inject.Inject;
 
@@ -15,12 +16,14 @@ public class CreateTopicMessageHandler implements DiscussionCliOperationHandler 
 
     /**
      * Constructs handler with its dependencies.
-     * @param userHandler the ATAUserInput, for user input
+     *
+     * @param userHandler     the ATAUserInput, for user input
+     * @param topicMessageDao
      */
     @Inject
-    public CreateTopicMessageHandler(ATAUserInput userHandler,DiscussionCliState state) {
+    public CreateTopicMessageHandler(ATAUserInput userHandler, DiscussionCliState state) {
         this.userHandler = userHandler;
-        this.state=state;
+        this.state = state;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class CreateTopicMessageHandler implements DiscussionCliOperationHandler 
 
         if (null == state.getCurrentMember()) {
             throw new IllegalStateException(
-                "Encountered request to create topic message but there is no current member. Exiting"
+                    "Encountered request to create topic message but there is no current member. Exiting"
             );
         }
         if (null == state.getCurrentTopic()) {
@@ -36,11 +39,11 @@ public class CreateTopicMessageHandler implements DiscussionCliOperationHandler 
             return "You must select a topic first.";
         }
 
-        String messageContent = userHandler.getString("Message:");
-        // PARTICIPANTS: Create the TopicMessage and save it
-        state.setNextOperation(DiscussionCliOperation.VIEW_TOPIC_MESSAGES);
+            String messageContent = userHandler.getString("Message:");
+            // PARTICIPANTS: Create the TopicMessage and save it
+            state.setNextOperation(DiscussionCliOperation.VIEW_TOPIC_MESSAGES);
 
 
-        return "\n*** Creating topic messages isn't supported yet. Maybe you can implement it? :)";
+            return "\n*** Creating topic messages isn't supported yet. Maybe you can implement it? :)";
     }
 }

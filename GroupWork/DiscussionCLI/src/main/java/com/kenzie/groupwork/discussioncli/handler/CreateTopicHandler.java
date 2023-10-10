@@ -13,6 +13,7 @@ import javax.inject.Inject;
 public class CreateTopicHandler implements DiscussionCliOperationHandler {
     private final TopicDao topicDao;
     private final ATAUserInput userHandler;
+
     private DiscussionCliState state;
 
     /**
@@ -34,7 +35,7 @@ public class CreateTopicHandler implements DiscussionCliOperationHandler {
 
         Topic newTopic = new Topic(topicName, description);
         newTopic = topicDao.createTopic(newTopic);
-       // state.setCurrentTopic(newTopic);
+        state.setCurrentTopic(newTopic);
 
         return String.format("New topic '%s' was created!%nTopic changed to '%s'",
                              newTopic.getName(), newTopic.getName());

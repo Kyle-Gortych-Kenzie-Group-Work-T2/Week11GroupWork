@@ -19,23 +19,39 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class CreateTopicMessageHandlerTest {
     private CreateTopicMessageHandler handler;
+
     private DiscussionCliState state;
 
     @Mock
     private ATAUserInput userHandler;
-    @Mock
-    private TopicMessageDao topicMessageDao;
+
 
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new CreateTopicMessageHandler(userHandler, state);
         state = getState();
+        handler = new CreateTopicMessageHandler(userHandler, state);
     }
 
     @Test
     void handleRequest_userProvidesMessageContent_daoReceivesRequestoCreateTopicMessage() {
         // PARTICIPANTS - implement test when you think appropriate
+        // GIVEN
+        String messageContent = "Hello, this is a test message";
+
+        when(userHandler.getString(anyString())).thenReturn(messageContent);
+
+        Topic currentTopic = new Topic("A Topic Title", "A Topic Description");
+        Member currentMember = new Member("testUser");
+
+        state.setCurrentTopic(currentTopic);
+        state.setCurrentMember(currentMember);
+
+        // WHEN
+        handler.handleRequest();
+
+        // THEN
+        assertEquals(DiscussionCliOperation.VIEW_TOPIC_MESSAGES, state.getNextOperation());
     }
 
     @Test
@@ -80,7 +96,7 @@ public class CreateTopicMessageHandlerTest {
         // state does not have member but has current topic
         //state.setCurrentMember(null);
         Topic currentTopic = new Topic("a lonely lonely topic", "with description");
-        //state.setCurrentTopic(currentTopic);
+        state.setCurrentTopic(currentTopic);
 
         // WHEN + THEN - exception fires
         assertThrows(IllegalStateException.class, () -> handler.handleRequest());

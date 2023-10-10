@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import javax.inject.Inject;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,7 +22,9 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class LoginHandlerTest {
+
     private LoginHandler handler;
+
     private DiscussionCliState state;
 
     @Mock
@@ -31,8 +35,8 @@ public class LoginHandlerTest {
     @BeforeEach
     private void setup() {
         initMocks(this);
-        handler = new LoginHandler(memberDao, userHandler, state);
         state = getCliState();
+        handler = new LoginHandler(memberDao, userHandler, state);
     }
 
     @Test

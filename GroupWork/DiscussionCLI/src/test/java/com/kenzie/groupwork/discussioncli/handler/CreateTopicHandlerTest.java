@@ -18,6 +18,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class CreateTopicHandlerTest {
     private CreateTopicHandler handler;
+    @Mock
     private DiscussionCliState state;
 
     @Mock
@@ -30,6 +31,7 @@ public class CreateTopicHandlerTest {
         initMocks(this);
         handler = new CreateTopicHandler(topicDao, userHandler, state);
         state = getState();
+       // state = new DiscussionCliState(); // Initialize the state object here
     }
 
     @Test
@@ -37,9 +39,12 @@ public class CreateTopicHandlerTest {
         // GIVEN
         // Topic data
         String topicName = "name";
+
         String topicDescription = "description";
+
         // Topic to create
         Topic newTopic = new Topic(topicName, topicDescription);
+
         // User handler returns name then description
         when(userHandler.getString("", "New topic name: ")).thenReturn(topicName);
         when(userHandler.getString("", "New topic description: ")).thenReturn(topicDescription);
@@ -56,7 +61,7 @@ public class CreateTopicHandlerTest {
         assertTrue(result.contains(newTopic.getName()));
     }
 
-    private DiscussionCliState getState() {
+   private DiscussionCliState getState() {
         return new DiscussionCliState();
     }
 }
