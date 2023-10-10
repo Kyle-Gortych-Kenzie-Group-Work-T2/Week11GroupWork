@@ -1,6 +1,6 @@
 <div align="right">
  
-![week 2](https://img.shields.io/github/actions/workflow/status/Kyle-Gortych-Kenzie-Group-Work-T2/Week11GroupWork/main.yml?label=main) ![week 2](https://img.shields.io/github/actions/workflow/status/Kyle-Gortych-Kenzie-Group-Work-T2/Week11GroupWork/original.yml?label=original)
+![week 2](https://img.shields.io/github/actions/workflow/status/Kyle-Gortych-Kenzie-Group-Work-T2/Week11GroupWork/meazaberhe24.yml?label=meazaberhe24) ![week 2](https://img.shields.io/github/actions/workflow/status/Kyle-Gortych-Kenzie-Group-Work-T2/Week11GroupWork/original.yml?label=original)
 
 </div>
 
@@ -12,13 +12,6 @@ descript
 <details>
 <summary>Diff with original branch</summary>
 
-<details>
-<summary>sample.java</summary>
- 
-```diff
-input
-```
-</details>
 
 </details>
 
